@@ -1,0 +1,45 @@
+/* .new-status {
+    background-color: orange;
+  }
+  
+  .confirmed-status {
+    background-color: blue;
+  }
+  
+  .checked-in-status {
+    background-color: green;
+  }
+  
+  .checked-out-status {
+    background-color: red;
+  }
+   */
+   .blue {
+    background-color: rgba(0, 0, 255, 0.753);
+    color: white;
+  }
+  
+  .gray {
+    background-color: rgb(128, 124, 124);
+    color: white;
+  }
+  
+  .orange {
+    background-color: rgb(252, 127, 11);
+    color: white;
+  }
+  
+  .green {
+    background-color: rgb(8, 90, 8);
+    color: white;
+  }
+  
+  .red {
+    background-color: rgb(219, 0, 0);
+    color: white;
+  }
+  
+  .yellow {
+    background-color: rgb(255, 255, 0);
+    color: black;
+  }

@@ -1,0 +1,127 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Booking Module</a>
+    <button class="navbar-toggler" (click)="hideBtn()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" [ngClass]="status ? 'hide' : 'show'">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link custom-btn" (click)="goToTableView()">Reception</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="position-relative">
+  <img src="/assets/images/bg.jpg" class="w-100 imgTest" alt="bg">
+  <div class="booking-form-container">
+    <div class="container">
+      <h2>Find Your Stay</h2>
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3 col-sm-6">
+            <label for="location">Location</label>
+            <select id="location" formControlName="location" class="form-control">
+              <option value='' >Select Location</option>
+              <option *ngFor="let location of uniqueLocations" [value]="location">{{ location }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="stayDateFrom">Arrival Date</label>
+            <input type="date" [min]="currentdate" id="stayDateFrom" formControlName="stayDateFrom" class="form-control">
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="stayDateTo">Departure Date</label>
+            <input type="date" [min]="currentdate" id="stayDateTo" formControlName="stayDateTo" class="form-control">
+          </div>
+
+          <div class="col-md-2 col-sm-6">
+            <label for="guests">Guests</label>
+            <input type="number" id="guests" formControlName="guests" class="form-control" min="1"
+              placeholder="No. of guests">
+          </div>
+
+          <div class="col-md-1 col-sm-12 text-md-end">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+          </div>
+        </div>
+      </form>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-lg-3 mb-3">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="card">
+          <div class="card-body">
+            <h5>Filter by:</h5>
+            <div>
+              <label for="budget-range">Your budget</label>
+              <input type="range" class="form-range range-wrapper" [min]="minPrice" [max]="maxPrice"
+                [value]="selectedPrice" (input)="onPriceChange($event)" id="budget-range">
+              <p>$ {{ minPrice }} - {{ selectedPrice | currency: 'USD' }}</p>
+            </div>
+
+            <div class="mt-3">
+              <h6>Popular filters :-</h6>
+              <div class="form-check">
+                <input class="form-check-input ms-3" type="checkbox" value="" id="room">
+                <label class="form-check-label" for="room">Room</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input ms-3" type="checkbox" value="" id="month">
+                <label class="form-check-label" for="month">Month</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input ms-3" type="checkbox" value="" id="swimming-pool">
+                <label class="form-check-label" for="swimming-pool">Swimming Pool</label>
+              </div>
+              <div class="mb-3">
+                <label for="numberOfDays">Days To Stay</label>
+                <input type="number" id="numberOfDays" formControlName="numberOfDays" class="form-control mt-2"
+                  placeholder="Number of Days">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-9 col-md-12">
+      <div >
+        <h3>Available Rooms</h3>
+        <div *ngFor="let room of filteredRooms" class="mb-3">
+          <div class="location-card d-flex flex-column flex-md-row border rounded">
+            <div class="location-image col-md-4">
+              <img src="/assets/images/rooms/res2.jpg" alt="resort image" class="img-fluid">
+            </div>
+            <div class="location-details col-md-8 d-flex flex-column justify-content-between p-3">
+              <h2>{{ room.locationName }}</h2>
+              <p><strong>Room:</strong> {{ room.roomName }}</p>
+              <p><strong>Guests:</strong> {{ room.guestCapacity }}</p>
+              <p><strong>Price:</strong> $ {{ room.pricePerDayPerPerson }}</p>
+              <!-- <p><strong>Review Score:</strong> {{ room.reviewScore }}</p>
+              <p><strong>Rating:</strong> 
+                <ng-container *ngIf="room.reviewStars">
+                  <span *ngFor="let star of [].constructor(room.reviewStars); let i = index" class="bi bi-star-fill text-warning"></span>
+                  <span *ngFor="let star of [].constructor(5 - room.reviewStars); let i = index" class="bi bi-star text-muted"></span>
+                </ng-container>
+                <ng-container *ngIf="!room.reviewStars">No reviews</ng-container>
+              </p>
+              <p *ngIf="room.isBestRoom" class="text-success"><strong>Best Room</strong></p> -->
+              <button class="btn btn-primary btn-custom mt-2" (click)="openBookingmodal(room)">Reserve It</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="filteredRooms.length === 0">No rooms match the selected filters</p>
+    </div>
+  </div>
+</div>

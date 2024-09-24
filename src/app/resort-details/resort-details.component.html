@@ -1,0 +1,49 @@
+<!-- <div class="container mt-4">
+    <h2>Availability</h2>
+    <form [formGroup]="availabilityForm" (ngSubmit)="onSearch()">
+      <div class="row align-items-end">
+        <div class="col-md-4 mb-3">
+          <label for="arrivalDate">Arrival Date</label>
+          <input type="date" id="arrivalDate" formControlName="arrivalDate" class="form-control">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="departureDate">Departure Date</label>
+          <input type="date" id="departureDate" formControlName="departureDate" class="form-control">
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="guests">Guests</label>
+          <input type="number" id="guests" formControlName="guests" class="form-control" min="2">
+        </div>
+        <div class="col-md-2 mb-3">
+          <button type="submit" class="btn btn-primary w-100">Change Search</button>
+        </div>
+      </div>
+    </form>
+    <table *ngIf="availabilityResults.length > 0" class="table table-bordered mt-4">
+      <thead class="thead-light">
+        <tr>
+          <th>Room type</th>
+          <th>Number of guests</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of availabilityResults">
+          <td>{{ room.roomName }}</td>
+          <td>{{ room.guestCapacity }}</td>
+          <td>
+            <ng-container >
+              ₹{{ room.pricePerDayPerPerson }} per night
+            </ng-container>
+           
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+    <div *ngIf="availabilityResults.length === 0" class="alert alert-danger mt-4">
+      <strong>We have no availability</strong> between {{ arrivalDate | date: 'EEE, d MMM' }} and {{ departureDate | date: 'EEE, d MMM' }}.
+      <br>Select different dates to see more availability.
+    </div> --> 

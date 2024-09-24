@@ -1,0 +1,252 @@
+
+<div mat-dialog-title class="title-container">
+  <h3 >Booking Details</h3>
+  <button mat-icon-button (click)="onClose()" class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+  <div mat-dialog-content style="overflow-y: hidden;" class="modal-content">
+    <div class="modal-body" style="overflow-y: hidden;">
+    <mat-horizontal-stepper #stepper [linear]="true" (selectionChange)="onStepChange($event)">
+      <mat-step label="Booking Summary" [completed]="isRoomSelected">
+        <form [formGroup]="summaryForm">
+          
+  
+          <div class="form-row">
+            <!-- [matDatepickerFilter]="dateFilter" -->
+            <mat-form-field>
+              <mat-label>Arrival Date</mat-label>
+              <input 
+                matInput 
+                [matDatepicker]="arrivalDatePicker" 
+                [matDatepickerFilter]="arrivaldateFilter"
+                formControlName="stayDateFro" 
+                (dateChange)="onArrivalDateChange( $event)"
+                
+              >
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #arrivalDatePicker></mat-datepicker>
+            </mat-form-field>
+            
+  
+            <mat-form-field >
+              <mat-label>Departure Date</mat-label>
+              <input matInput [matDatepicker]="departureDatePicker" [matDatepickerFilter]="departuredatefilter" formControlName="stayDateTo" (dateChange)="onDepartureDateChange($event)">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="departureDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #departureDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field >
+              <mat-label>Guests</mat-label>
+              <input matInput formControlName="guestCapacity" type="number"  placeholder="Number of Guest" (keydown.enter)="$event.preventDefault()" (change)="onGuestCapacityChange($event)">
+            </mat-form-field>
+          </div>
+          <div *ngIf="filteredRooms.length > 0" class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead class="thead-dark thead-sticky sticky-top">
+                <tr>
+                  <th>Room ID</th>
+                  <th>Resort Name</th>
+                  <th>Room Name</th>
+                  <th>Number of Nights</th>
+                  <th>Total Price</th>
+                  <th>Select Room</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let room of filteredRooms">
+                  <td>{{ room.roomId }}</td>
+                  <td>{{ room.locationName }}</td>
+                  <td>{{ room.roomName }}</td>
+                  <td>{{ room.numberOfNights }}</td>
+                  <td>{{ room.totalPrice  }}</td>
+                  <td>
+                    <button mat-raised-button (click)="selectRoom(room); stepper.next()">Book Now</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div *ngIf="filteredRooms.length === 0">
+            <p>No rooms available for the selected dates and guest capacity.</p>
+          </div>
+          
+        </form>
+      </mat-step>
+  
+      <mat-step label="Customer Details">
+        <form [formGroup]="bookingForm">
+          <mat-radio-group name="customerType">
+            <mat-radio-button value="new" (change)="setCustomerMode('new')" checked="">New Customer</mat-radio-button>
+            <mat-radio-button value="existing" (change)="setCustomerMode('existing')">Existing Customer</mat-radio-button>
+          </mat-radio-group>
+  
+          <div *ngIf="isExistingCustomer" class="form-row">
+            <mat-form-field >
+              <mat-label>Select Existing Customer</mat-label>
+              <mat-select formControlName="existingCustomer" (selectionChange)="fillExistingCustomerDetails($event)">
+                <mat-option *ngFor="let customer of existingCustomers" [value]="customer.customerId">{{ customer.fullName }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+          <div class="form-row">
+            <mat-form-field >
+              <mat-label>Customer ID</mat-label>
+              <input matInput formControlName="customerId" readonly>
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Full Name</mat-label>
+              <input matInput formControlName="fullName">
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email">
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phone">
+            </mat-form-field>
+          </div>
+  
+          <div class="form-row">
+            <mat-form-field >
+              <mat-label>Birth Date</mat-label>
+              <input matInput [matDatepicker]="birthDatePicker" formControlName="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #birthDatePicker></mat-datepicker>
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address">
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step label="Payment Details">
+        <form [formGroup]="paymentForm">
+          <mat-radio-group name="paymentMethod">
+            <mat-radio-button value="online" (change)="setPaymentMethod('online')" checked>Online Payment</mat-radio-button>
+            <mat-radio-button value="cash" (change)="setPaymentMethod('cash')">Cash Payment</mat-radio-button>
+          </mat-radio-group>
+  
+          <div *ngIf="paymentMode === 'online'" class="form-row">
+            <mat-form-field >
+              <mat-label>Card Number</mat-label>
+              <input matInput formControlName="cardNumber">
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Cardholder Name</mat-label>
+              <input matInput formControlName="cardName">
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Expiration Date</mat-label>
+              <input matInput [matDatepicker]="expirationDatePicker" formControlName="expirationDate">
+              <mat-datepicker-toggle matSuffix [for]="expirationDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #expirationDatePicker></mat-datepicker>
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>CVV</mat-label>
+              <input matInput formControlName="cvv">
+            </mat-form-field>
+          </div>
+  
+          <div *ngIf="paymentMode === 'cash'" class="form-row">
+            <mat-form-field>
+              <mat-label>Total Amount</mat-label>
+              <input matInput formControlName="totalAmount" readonly>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Paid Amount</mat-label>
+              <input matInput formControlName="paidAmount" type="number" (input)="updateDueAmount()">
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Due Amount</mat-label>
+              <input matInput formControlName="dueAmount" readonly>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step label="Preview">
+       
+        <div id="booking-preview" class="preview-content">
+          <div class="preview-section">
+            <h5>Booking Summary</h5>
+            <table class="summary-table">
+              <tr>
+                <th>Resort Name</th>
+                <td>{{ summaryForm.get('locationName')?.value }}</td>
+              </tr>
+              <tr>
+                <th>Room Name</th>
+                <td>{{ summaryForm.get('roomName')?.value }}</td>
+              </tr>
+              <tr>
+                <th>Arrival Date</th>
+                <td>{{ summaryForm.get('stayDateFro')?.value | date: 'MM/dd/yyyy' }}</td>
+              </tr>
+              <tr>
+                <th>Departure Date</th>
+                <td>{{ summaryForm.get('stayDateTo')?.value | date: 'MM/dd/yyyy' }}</td>
+              </tr>
+              <tr>
+                <th>Total Price</th>
+                <td>{{ selectedroom?.totalPrice | currency }}</td>
+              </tr>
+            </table>
+          </div>
+        
+          <div class="preview-section">
+            <h5>Customer Details</h5>
+            <table class="customer-table">
+              <tr>
+                <th>Full Name</th>
+                <td>{{ bookingForm.get('fullName')?.value }}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{ bookingForm.get('email')?.value }}</td>
+              </tr>
+              <tr>
+                <th>Phone Number</th>
+                <td>{{ bookingForm.get('phone')?.value }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="preview-section">
+            <h5>Payment Details</h5>
+            <table class="payment-table">
+              <tr>
+                <th>Payment Mode</th>
+                <td>{{ paymentMode === 'online' ? 'Online Payment' : 'Cash Payment' }}</td>
+              </tr>
+            </table>
+          </div>
+        
+          <button class="booking-button" (click)="onSubmit()">Confirm Booking</button>
+          <button id="print-invoice" (click)="printInvoice()">Print Invoice</button>
+        </div>
+        
+      </mat-step>
+      
+      
+    </mat-horizontal-stepper>
+    </div>
+  </div>
+  <div mat-dialog-actions class="actions-container">
+    <button mat-button color="primary" (click)="stepper.next()" class="next-button" *ngIf="stepper.selectedIndex !== 3">Next</button>
+  </div>
+  

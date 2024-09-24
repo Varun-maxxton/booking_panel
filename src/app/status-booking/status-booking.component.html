@@ -1,0 +1,54 @@
+
+   <div class="modal-header">
+    <h4 class="modal-title">Update Booking Status</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          class="form-control"
+          [(ngModel)]="fullName"
+          name="fullName"
+          disabled
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stayDateFrom" class="form-label">Stay Date From</label>
+        <input
+          type="text"
+          id="stayDateFrom"
+          class="form-control"
+          [(ngModel)]="stayDateFrom"
+          name="stayDateFrom"
+          disabled
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stayDateTo" class="form-label">Stay Date To</label>
+        <input
+          type="text"
+          id="stayDateTo"
+          class="form-control"
+          [(ngModel)]="stayDateTo"
+          name="stayDateTo"
+          disabled
+        />
+      </div>
+      <div class="mb-3">
+        <label for="statusSelect" class="form-label">Select Status</label>
+        <select id="statusSelect" class="form-select" [(ngModel)]="selectedStatus"  name="status">
+          <option *ngFor="let status of statuses" [value]="status" [ngStyle]="{'background-color': getStatusColor(status)}">{{ status }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+  </div>
+  

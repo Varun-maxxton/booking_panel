@@ -1,0 +1,57 @@
+<div class="container-fluid mt-5 mb-5 bordered">
+  <!-- <h2 class="text-center mb-4">Booking Details</h2> -->
+  <button class="btn btn-success mb-3" (click)="openCreateReservationModal()">Add Reservations</button>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-fixed">
+        <tr>
+          <th>Room No.</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Location</th>
+          <th>Room Name</th>
+          <th>Arrival Date</th>
+          <th>Departure Date</th>
+          <th>Guest Capacity</th>
+          <th>Total Amount</th>
+          <th>Paid Amount</th>
+          <th>Due Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings; let i = index">
+          <td>{{ booking.summary.roomId}}</td>
+          <td>{{ booking.bookingDetails.fullName }}</td>
+          <td>{{ booking.bookingDetails.email }}</td>
+          <td>{{ booking.bookingDetails.phone }}</td>
+          <td>{{ booking.bookingDetails.address }}</td>
+          <td>{{ booking.summary.locationName }}</td>
+          <td>{{ booking.summary.roomName }}</td>
+          <td>{{ booking.summary.stayDateFro }}</td>
+          <td>{{ booking.summary.stayDateTo }}</td>
+          <td>{{ booking.summary.guestCapacity }}</td>
+          <td>{{ booking.summary.totalPrice }}</td>
+          <td>
+            <input type="number" class="form-control" [(ngModel)]="booking.payment.paidAmount" 
+                   (ngModelChange)="paidanddue(i)">
+          </td>
+          <td>{{ booking.payment.dueAmount }}</td>
+          <td>
+            <select [(ngModel)]="booking.status" class="form-select status-dropdown" (change)="updateStatus(i, booking.status)">
+              <option value="Confirmed" class="blue">Confirmed</option>
+              <option value="New" class="orange">New</option>
+              <option value="Checked In" class="green">Checked In</option>
+              <option value="Cancelled" class="gray">Cancelled</option>
+              <option value="Checked Out" class="red">Checked Out</option>
+            </select>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

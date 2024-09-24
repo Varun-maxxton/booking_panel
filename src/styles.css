@@ -1,0 +1,26 @@
+.mat-snack-bar-container {
+    top: 0 !important; /* Ensure the snackbar is at the top */
+    bottom: auto !important; /* Disable default bottom positioning */
+  }
+  .custom-snackbar {
+    /* background-color: #4caf50 !important; Green background */
+    color: white !important; /* White text color */
+    font-size: 16px; /* Font size */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding */
+  }
+  
+  .custom-snackbar .mat-simple-snackbar-action {
+    color: yellow !important; /* Color of the action button */
+  }
+  .custom-dialog-container .mat-dialog-container {
+    background: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .mat-mdc-dialog-surface{
+    overflow-y: hidden !important;
+  }
+  
+  

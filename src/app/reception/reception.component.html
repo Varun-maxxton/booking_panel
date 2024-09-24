@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Reception</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ms-2">
+                    <a class="nav-link custom-btn" (click)="navigateToCustomer()">Customer</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="position-relative">
+    <!-- <img src="/assets/images/rooms/bg.jpg" class="w-100 imgTest" alt="bg"> -->
+    <div class="container-fluid overlay-container">
+        <h1 class="text-center mb-4">Booking Details</h1>
+        <div class=" d-flex flex-wrap justify-content-center ">
+            <button type="button" class="btn btn-primary mx-2 mb-2" (click)="selectStep(1)" (mouseover)="isHovered1 = true"
+                (mouseleave)="isHovered1 = false"
+                [ngClass]="{'btn-primary text-white': currentStep === 1, 'btn-light text-dark': currentStep !== 1, 'border-black': currentStep !== 1}">
+                <i class="bi bi-arrow-left fas fa-table"></i> Table View
+            </button>
+            <button type="button" class="btn btn-primary mx-2 mb-2" (click)="selectStep(2)" (mouseover)="isHovered2 = true"
+                (mouseleave)="isHovered2 = false"
+                [ngClass]="{'btn-primary text-white': currentStep === 2, 'btn-light text-dark': currentStep !== 2, 'border-black': currentStep !== 2}">
+                Planning Chart <i class="bi bi-arrow-right fas fa-chart-bar"></i>
+            </button>
+        </div>
+        <div class="">
+            <div class="stepper d-flex justify-content-center">
+                <div class="mt-4 w-100">
+                    <app-table *ngIf="currentStep === 1"></app-table>
+                    <app-planningchart *ngIf="currentStep === 2"></app-planningchart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

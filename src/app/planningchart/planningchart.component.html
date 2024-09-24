@@ -1,0 +1,107 @@
+<div class="overlay-container">
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" >
+  <div class="row g-3 align-items-end">
+    <div class="col-md-3 col-sm-6">
+      <label for="location">Location</label>
+      <select id="location" formControlName="location" class="form-control">
+        <option value='' >Select Location</option>
+        <option *ngFor="let location of uniqueLocations" [value]="location">{{ location }}</option>
+      </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <label for="roomName">Room Name</label>
+      <select id="roomName" formControlName="roomName" class="form-control">
+        <option value="">Select Room</option>
+        <option *ngFor="let room of filteredRoomNames" [value]="room.roomName">{{ room.roomName }}</option>
+      </select>
+    </div>
+    <div class="col-md-2 col-sm-6">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status" class="form-control">
+        <option value='' >Select Your Status</option>
+        <option value="New">New</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Checked In">Checked In</option>
+        <option value="Checked Out">Checked Out</option>
+      </select>
+    </div>
+
+    <div class="col-md-1 col-sm-12 text-md-end">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </div>
+</form>
+</div>
+
+  <div class="container-fluid  mt-5 mb-5 bordered">
+
+    <div class="indication-container mb-2">
+      <div class="indicator-item">
+        <span class="indicator-box arrival-box"></span>
+        <span class="indicator-text">Arrival Day</span>
+      </div>
+      <div class="indicator-item">
+        <span class="indicator-box departure-box"></span>
+        <span class="indicator-text">Departure Day</span>
+      </div>
+      <div class="indicator-item">
+        <span class="indicator-box new-box"></span>
+        <span class="indicator-text">New</span>
+      </div>
+      <div class="indicator-item">
+        <span class="indicator-box confirm-box"></span>
+        <span class="indicator-text">Confirm</span>
+      </div>
+      <div class="indicator-item">
+        <span class="indicator-box checked-in-box"></span>
+        <span class="indicator-text">Checked-In</span>
+      </div>
+      <div class="indicator-item">
+        <span class="indicator-box checked-out-box"></span>
+        <span class="indicator-text">Checked-Out</span>
+      </div>
+    </div>
+    <div class="month-navigation">
+      <button (click)="prevMonth()" class="btn btn-primary">Previous</button>
+      <span>{{ currentMonth | date: 'MMMM yyyy' }}</span>
+      <button (click)="nextMonth()" class="btn btn-primary">Next</button>
+    </div>
+  
+    <div class="booking-chart-container table-responsive">
+      <table class="table table-bordered  table-sm mb-3">
+        <thead>
+          <tr class="month-header-wrapper">
+            <th class="room-names sticky-top" rowspan="2">Room ID/Name</th>
+            <ng-container *ngFor="let day of daysInMonth">
+              <th class="date-cell sticky-top">{{ day | date: 'dd' }}</th>
+            </ng-container>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let day of daysInMonth">
+              <th class="date-cell sticky-top">{{ day | date: 'EEE'}}</th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of filteredRooms">
+            <td class="room-names sticky-top" style="z-index: 10;">{{ room.roomId }} - {{ room.roomName }}</td>
+            <ng-container *ngFor="let day of daysInMonth">
+              <td  class="booking-cell"
+                  [attr.data-bs-toggle]="isRoomBooked(room.roomId, day) ? 'tooltip' : null"
+                  [attr.data-bs-html]="true"
+                  [attr.title]="gettooltip(room.roomId, day)"
+                  [ngStyle]="{ '--booking-color': getStatusColor(getbookingstatus(room.roomId, day)) }"
+                  [ngClass]="getDynamicClasses(room.roomId, day)"
+                  (dblclick)="onCellDoubleClick(room.roomId, day, $event)"
+                  (mousedown)="onMouseDown(room.roomId, day, $event)"
+                  (mouseover)="onMouseOver(room.roomId, day, $event)"
+                  (mouseup)="onMouseUp(room.roomId, day, $event)"
+                  >
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+</div>

@@ -1,0 +1,125 @@
+
+.container-fluid {
+  max-width: 100%;
+}
+.navbar-nav .nav-link {
+  color: #007bff; 
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem; 
+  transition: background-color 0.3s, color 0.3s; 
+  cursor: pointer;
+}
+.bordered{
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 20px;
+  /* margin-top: 40px; */
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+.navbar-nav .nav-link:hover {
+  background-color: #f0f0f0;
+  color: #0056b3;
+}
+.table-responsive{
+  overflow-x: auto;
+
+}
+.table-container {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  /* table-layout: auto; */
+}
+.table th, .table td {
+  padding: 0.5rem;
+  text-align: center;
+  vertical-align: middle; 
+}
+.thead-fixed th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  z-index: 1;
+  text-align: center; 
+  vertical-align: middle;
+  /* white-space: nowrap; */
+}
+
+
+.status-dropdown {
+  width: 100%;
+  padding: 0.375rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+td:nth-child(12) {
+  min-width: 120px;
+  max-width: 120px;
+}
+
+td:nth-child(14) {
+  min-width: 170px;
+  max-width: 170px;
+}
+.status-dropdown option[value=""] {
+  color: #6c757d; 
+  font-style: italic;
+}
+.form-select.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.form-select.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+.form-select.bg-success {
+  background-color: #28a745 !important;
+}
+
+.form-select.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.form-select.bg-secondary {
+  background-color: #6c757d !important;
+}
+.blue {
+  background-color: rgba(0, 0, 255, 0.753);
+  color: white;
+}
+
+.gray {
+  background-color: rgb(128, 124, 124);
+  color: white;
+}
+
+.orange {
+  background-color: rgb(252, 127, 11);
+  color: white;
+}
+
+.green {
+  background-color: rgb(8, 90, 8);
+  color: white;
+}
+
+.red {
+  background-color: rgb(219, 0, 0);
+  color: white;
+}
+
+.yellow {
+  background-color: rgb(255, 255, 0);
+  color: black;
+}
