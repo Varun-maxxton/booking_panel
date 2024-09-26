@@ -1,37 +1,45 @@
-<div class="overlay-container">
-<form [formGroup]="searchForm" (ngSubmit)="onSearch()" >
-  <div class="row g-3 align-items-end">
-    <div class="col-md-3 col-sm-6">
-      <label for="location">Location</label>
-      <select id="location" formControlName="location" class="form-control">
-        <option value='' >Select Location</option>
-        <option *ngFor="let location of uniqueLocations" [value]="location">{{ location }}</option>
-      </select>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <label for="roomName">Room Name</label>
-      <select id="roomName" formControlName="roomName" class="form-control">
-        <option value="">Select Room</option>
-        <option *ngFor="let room of filteredRoomNames" [value]="room.roomName">{{ room.roomName }}</option>
-      </select>
-    </div>
-    <div class="col-md-2 col-sm-6">
-      <label for="status">Status</label>
-      <select id="status" formControlName="status" class="form-control">
-        <option value='' >Select Your Status</option>
-        <option value="New">New</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Checked In">Checked In</option>
-        <option value="Checked Out">Checked Out</option>
-      </select>
-    </div>
 
-    <div class="col-md-1 col-sm-12 text-md-end">
-      <button type="submit" class="btn btn-primary w-100">Search</button>
+<div class="overlay-container">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="row g-3 align-items-end">
+      <div class="col-12 col-md-4">
+        <label for="location">Location</label>
+        <select id="location" formControlName="location" class="form-control">
+          <option value="">Select Location</option>
+          <option *ngFor="let location of uniqueLocations" [value]="location">
+            {{ location }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="col-12 col-md-4">
+        <label for="roomName">Room Name</label>
+        <select id="roomName" formControlName="roomName" class="form-control">
+          <option value="">Select Room</option>
+          <option *ngFor="let room of filteredRoomNames" [value]="room.roomName">
+            {{ room.roomName }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="col-12 col-md-3">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option value="">Select Your Status</option>
+          <option value="New">New</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Checked In">Checked In</option>
+          <option value="Checked Out">Checked Out</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-md-1 text-md-end">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 </div>
+
 
   <div class="container-fluid  mt-5 mb-5 bordered">
 
@@ -97,6 +105,9 @@
                   (mouseover)="onMouseOver(room.roomId, day, $event)"
                   (mouseup)="onMouseUp(room.roomId, day, $event)"
                   >
+                  <!-- <span *ngIf="isRoomBooked(room.roomId, day)" class="booked-fullname">
+                    {{ getFullName(room.roomId, day) }}
+                  </span> -->
               </td>
             </ng-container>
           </tr>

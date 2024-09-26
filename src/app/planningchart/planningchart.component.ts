@@ -110,16 +110,14 @@ export class PlanningchartComponent implements OnInit {
     const selectedLocation = this.searchForm.get('location')?.value;
 
     if (selectedLocation) {
-      // Filter rooms based on selected location
       this.filteredRoomNames = this.totalRoomData.filter(room => room.locationName === selectedLocation);
     } else {
-      // If no location is selected, show all rooms
       this.filteredRoomNames = [...this.totalRoomData];
     }
   }
   onLocationChange() {
     this.updateRoomNames();
-    this.searchForm.get('roomName')?.reset(); // Reset room name when location changes
+    this.searchForm.get('roomName')?.reset(); 
   }
 
   filterRooms() {
@@ -619,11 +617,13 @@ export class PlanningchartComponent implements OnInit {
     if (storedBookings) {
       this.bookings = JSON.parse(storedBookings);
       console.log('Bookings Loaded:', this.bookings);
+     
     }
     this.highlightBookedDates();
     this.highlightAlreadyBookedDates();
   }
-
+ 
+  
   highlightBookedDates() {
     // console.log('Highlighting Booked Dates');
     this.selectedCells.clear();
